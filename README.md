@@ -30,30 +30,28 @@ An interactive Desmos 3D graph representing the following can be found at https:
 When looking at the world from a top down view, it appears exactly as a normal 2D graph would. The X- and Y-axes are represented in this manner. The Z-axis extends the graph to 3D, adding height.
 
 ### Projecting a point in the world to the screen
-Initially, this was made without the ability to look around (no view angles). The XZ-plane was defined to be the plane in which the screen lies. A 3D vector, `v`, describes the position of the camera. Another vector describes the focal point of the camera. It is obtained by subtracting the focal distance from the y value of the position vector. From this, a line between the camera position `v` and a point in the world `p` can be stepped along using a parameter `t` to obtain `p'`, as follows (apologies for the maths formatting):
+Initially, this was made without the ability to look around (no view angles). The XZ-plane was defined to be the plane in which the screen lies. A 3D vector, $v$, describes the position of the camera. Another vector describes the focal point of the camera. It is obtained by subtracting the focal distance from the y value of the position vector. From this, a line between the camera position $v$ and a point in the world $p$ can be stepped along using a parameter $t$ to obtain $p'$, as follows:
 
-`p' = p + (f-p)t`
+$$p'=p+(f-p)t$$
 
-However, we would like to obtain the value of `t`such that `p'` is on the XZ-plane. This occurs when its y-value equals 0. Putting this information into the equation and using the y-components of the vectors allows us to solve for `t`, as follows:
+However, we would like to obtain the value of $t$ such that $p'$ is on the XZ-plane. This occurs when its y-value equals 0. Putting this information into the equation and using the y-components of the vectors allows us to solve for $t$, as follows:
 
-`p'.y = p.y + (f.y-p.y)t`
+$$\begin{aligned}
+p'.y&=p.y+(f.y-p.y)t\\
+0&=p.y+(f.y-p.y)t\\
+-p.y&=(f.y-p.y)t\\
+t&=\frac{-p.y}{f.y-p.y}\\
+t&=\frac{p.y}{p.y-f.y}\\
+\end{aligned}$$
 
-`0 = p.y + (f.y-p.y)t`
+Putting this value for $t$ back into the original equation gives us the point on the screen plane:
 
-`-p.y = (f.y-p.y)t`
-
-`t = -p.y/(f.y-p.y)`
-
-`t = p.y/(p.y-f.y)`
-
-Putting this value for `t` back into the original equation gives us the point on the screen plane:
-
-`p' = p + (f-p) * p.y/(p.y-f.y)`
+$$p'=p+(f-p)\cdot \frac{p.y}{p.y-f.y}$$
 
 ### Converting XZ-plane coordinates to screen coordinates
-The width of the viewport can be calculated by the equation `w = 2dtan(theta/2)`, where w is the screen width, d is the focal distance, and theta is the horizontal FOV.
+The width of the viewport can be calculated by the equation $w=2d\tan\frac{\theta}{2}$, where $w$ is the screen width, $w$ is the focal distance, and $\theta$ is the horizontal FOV.
 
-The height of the viewport can be calculated by the equation `h = w * screenHeight/screenWidth`.
+The height, $h$, of the viewport can be calculated by the equation $h=w\cdot \frac{screenHeight}{screenWidth}$.
 
 This gives us coordinates on the screen plane which bound the viewport. This can be used to map XZ-plane coordinates to screen coordinates.
 
