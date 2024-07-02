@@ -1,6 +1,8 @@
 # arduino-cube-renderer
-This is a simple 3D renderer with joystick control for microcontrollers written for the Arduino IDE.
-This project was quick and written for fun, and very likely may not the most efficient or tidy way to do this.
+This is a simple 3D renderer with joystick control for microcontrollers, written for the Arduino IDE.
+This project was quick and written for fun, and very well may not be the most efficient or tidy way to do this.
+
+![Picture of the renderer in action](renderer_image.jpg)
 
 ## How to use/key variables
 As with any Arduino project, simply open it, and upload it to your microcontroller.
