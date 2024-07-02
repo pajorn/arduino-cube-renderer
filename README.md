@@ -1,5 +1,6 @@
 # arduino-cube-renderer
 This is a simple 3D renderer with joystick control for microcontrollers written for the Arduino IDE.
+This project was quick and written for fun, and very likely may not the most efficient or tidy way to do this.
 
 ## How to use/key variables
 As with any Arduino project, simply open it, and upload it to your microcontroller.
@@ -25,17 +26,19 @@ I have been working on a private project which is a C/C++ 3D renderer where all 
 ## The maths
 An interactive Desmos 3D graph representing the following can be found at https://www.desmos.com/3d/yttht7z51h
 
-### The axis
-When looking at the world from a top down view, it appears exactly as a normal 2D graph would. The X- and Y-axes represented in this manner. The Z-axis extends the graph to 3D, adding height.
+### The axes
+When looking at the world from a top down view, it appears exactly as a normal 2D graph would. The X- and Y-axes are represented in this manner. The Z-axis extends the graph to 3D, adding height.
 
 ### Projecting a point in the world to the screen
-Initially, this was made without the ability to look around (no view angles). The XZ-plane was defined to be the plane in which the screen lies. A 3D vector, v, describes the position of the camera. Another vector describes the focal point of the camera. It is obtained by subtracting the focal distance from the y value of the position vector. From this, a line between the camera position v and a point in the world p can be stepped along using a parameter t, as follows (apologies for the maths formatting):
+Initially, this was made without the ability to look around (no view angles). The XZ-plane was defined to be the plane in which the screen lies. A 3D vector, `v`, describes the position of the camera. Another vector describes the focal point of the camera. It is obtained by subtracting the focal distance from the y value of the position vector. From this, a line between the camera position `v` and a point in the world `p` can be stepped along using a parameter `t` to obtain `p'`, as follows (apologies for the maths formatting):
 
 `p' = p + (f-p)t`
 
-However, we would like to the value of t such that p' is on the XZ-plane. This occurs when its y-value equals 0. Putting this information into the equation and using the y-components of the vectors allows us to solve for t, as follows:
+However, we would like to obtain the value of `t`such that `p'` is on the XZ-plane. This occurs when its y-value equals 0. Putting this information into the equation and using the y-components of the vectors allows us to solve for `t`, as follows:
 
 `p'.y = p.y + (f.y-p.y)t`
+
+`0 = p.y + (f.y-p.y)t`
 
 `-p.y = (f.y-p.y)t`
 
@@ -43,7 +46,7 @@ However, we would like to the value of t such that p' is on the XZ-plane. This o
 
 `t = p.y/(p.y-f.y)`
 
-Putting this value for t back into the original equation gives us the point on the screen plane:
+Putting this value for `t` back into the original equation gives us the point on the screen plane:
 
 `p' = p + (f-p) * p.y/(p.y-f.y)`
 
@@ -57,6 +60,6 @@ This gives us coordinates on the screen plane which bound the viewport. This can
 ### Adding rotation
 From here, I saw two clear methods to implement pitch and yaw. Either rotate the screen plane, or rotate the world objects.
 
-As I chose this method simply because I came up with it and not because it is the best way, the easiest way I saw to implement view angles was to rotate the points in the world. This is because it means we are still calculating intersection with the XZ-plane, which is merely when y = 0. To rotate the screen plane, it seemed the only way would be to find a method to calculate intersection between a line and an arbitrary plane, which sounded like a whole lot more effort.
+As I chose this method simply because I came up with it and not because it is the best way, the easiest way I saw to implement view angles was to rotate the points in the world. This is because it means we are still calculating intersection with the XZ-plane, which is merely when y = 0 and, thus, far easier to do. To rotate the screen plane, it seemed the only way to project a point to this plane would be to find a method to calculate intersection between a line and an arbitrary plane, which sounded like a whole lot more effort.
 
-In order to actually do the rotations, the points in space are firstly adjusted to have the camera position as their origin. They are then rotated about the Z-axis to implement yaw, followed by a rotation about the X-axis to implement pitch. The origin adjustment is then undone and the projection is done as described earlier.
+In order to actually perform the rotations, the points in space are firstly adjusted to have the camera position as their origin. They are then rotated about the Z-axis to implement yaw, followed by a rotation about the X-axis to implement pitch. The origin adjustment is then undone and the projection is done as described earlier. To aid visualisation, the 3D graph linked above may be of assistance.
