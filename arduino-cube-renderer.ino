@@ -160,9 +160,11 @@ Vec3i::Vec3i(void)
 
 void initRenderer(void)
 {
+  //calculate the viewport size to be used as bounds
   gViewWidth = 2 * gFocalDistance * tan(M_PI/360 * gFOV);
   gViewHeight = gViewWidth * gScreenHeight/gScreenWidth;
 
+  
   Serial.print("Screen Dimensions: ");
   Serial.print(gScreenWidth);
   Serial.print("x");
