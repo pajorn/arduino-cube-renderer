@@ -34,24 +34,22 @@ An interactive Desmos 3D graph representing the following can be found at https:
 When looking at the world from a top down view, it appears exactly as a normal 2D graph would. The X- and Y-axes are represented in this manner. The Z-axis extends the graph to 3D, adding height.
 
 ### Projecting a point in the world to the screen
-Initially, this was made without the ability to look around (no view angles). The XZ-plane was defined to be the plane in which the screen lies. A 3D vector describes the position of the camera. In this example it is assumed to be the origin. Another vector, $f$, describes the focal point of the camera. It is obtained by subtracting the focal distance from the y value of the position vector. From this, a line between a point in the world $p$ and the focal point $f$ and can be stepped along using a parameter $t$ to obtain $p'$, with the derivation of this as follows:
+Initially, this was made without the ability to look around (no view angles). The XZ-plane was defined to be the plane in which the screen lies. A 3D vector describes the position of the camera. In this example it is assumed to be the origin. Another vector, $f$, describes the focal point of the camera. It is obtained by subtracting the focal distance from the y value of the position vector. From this, a line between a point in the world $p$ and the focal point $f$ and can be stepped along using a parameter $t$ to obtain $p'$, as follows:
 
 $$\begin{aligned}
-\overrightarrow{Op'}&=p'-O\\
-p'&=\overrightarrow{Op'}\\
-p'&=\overrightarrow{Op}+\overrightarrow{pf}t\\
-p'&=(p-O)+(f-p)t\\
+p'&=p+\overrightarrow{pf}\cdot t\\
 \therefore p'&=p+(f-p)t
 \end{aligned}$$
 
 However, we would like to obtain the value of $t$ such that $p'$ is on the XZ-plane. This occurs when its y-value equals 0. Putting this information into the equation and using the y-components of the vectors allows us to solve for $t$, as follows:
 
 $$\begin{aligned}
+p'&=p+(f-p)t\\
 p'.y&=p.y+(f.y-p.y)t\\
 0&=p.y+(f.y-p.y)t\\
 -p.y&=(f.y-p.y)t\\
 t&=\frac{-p.y}{f.y-p.y}\\
-t&=\frac{p.y}{p.y-f.y}\\
+\therefore t&=\frac{p.y}{p.y-f.y}\\
 \end{aligned}$$
 
 Putting this value for $t$ back into the original equation gives us the point on the screen plane:
