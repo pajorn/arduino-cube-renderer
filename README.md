@@ -1,5 +1,6 @@
 # arduino-cube-renderer
 This is a simple 3D renderer with joystick control for microcontrollers, written for the Arduino IDE.
+
 This project was quick and written for fun, and very well may not be the most efficient or tidy way to do this.
 
 ![Picture of the renderer in action](renderer_image.jpg)
@@ -7,7 +8,7 @@ This project was quick and written for fun, and very well may not be the most ef
 ## How to use/key variables
 As with any Arduino project, simply open it, and upload it to your microcontroller.
 
-However, some microcontrollers such as those based on the ATmega328p may not have enough RAM. Microcontrollers with sufficient RAM such as the ESP32 are recommended.
+However, some microcontrollers, such as those based on the ATmega328p, may not have enough RAM. Microcontrollers with sufficient RAM, such as the ESP32, are recommended.
 
 ### Necessary variables
 If you are using a display other than the SSD1306/SSD1315, you'll also have to change the u8g2 initialiser accordingly (and potentially the screen dimension constants `gScreenWidth` and `gScreenHeight`).
@@ -57,7 +58,7 @@ Putting this value for $t$ back into the original equation gives us the point on
 $$p'=p+(f-p)\cdot \frac{p.y}{p.y-f.y}$$
 
 ### Converting XZ-plane coordinates to screen coordinates
-The width of the viewport can be calculated by the equation $w=2d\tan\frac{\theta}{2}$, where $w$ is the screen width, $w$ is the focal distance, and $\theta$ is the horizontal FOV.
+The width of the viewport can be calculated by the equation $w=2d\tan\frac{\theta}{2}$, where $w$ is the screen width, $d$ is the focal distance, and $\theta$ is the horizontal FOV.
 
 The height, $h$, of the viewport can be calculated by the equation $h=w\cdot \frac{screenHeight}{screenWidth}$.
 
